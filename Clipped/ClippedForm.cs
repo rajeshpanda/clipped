@@ -11,15 +11,17 @@ namespace Clipped
     public partial class ClippedForm : Form
     {
         public Queue<string> History { get; set; }
-        //public List<string> saved { get; set; }
+
+        public int HistorySize { get; set; }
+
         public ClippedForm()
         {
             History = new Queue<string>();
-            //saved = new List<string>();
             InitializeComponent();
             InitializeBackgroudWorker();
             backgroundWorker1.RunWorkerAsync();
             this.FormClosing += OnFormClosing;
+            HistorySize = 20;
         }
 
         void InitializeBackgroudWorker()
@@ -38,7 +40,7 @@ namespace Clipped
                     if (!History.Contains(newValue) && !string.IsNullOrEmpty(newValue))
                     {
                         History.Enqueue(newValue);
-                        if (History.Count > 10)
+                        if (History.Count > HistorySize && HistorySize != 0)
                         {
                             History.Dequeue();
                         }
@@ -46,11 +48,6 @@ namespace Clipped
                         RecreateForm();
                         CreateDynamicQuickCopy();
                     }
-
-                    //for (var i = 0; i < saved.Count; i++)
-                    //{
-                    //    CreateDynamicForm(saved.ElementAt(i), i, saved.Count + history.Count);
-                    //}
                 });
                 Thread.Sleep(1000);
             }
@@ -63,7 +60,6 @@ namespace Clipped
                 this.ShowInTaskbar = false;
                 notifyIcon1.Visible = true;
                 this.Hide();
-                //notifyIcon1.ShowBalloonTip(4000);
             }
         }
 
@@ -77,9 +73,7 @@ namespace Clipped
             panel.Location = new System.Drawing.Point(12, 116 * (size - position) + 30);
             panel.Name = "panel" + position;
             panel.Size = new System.Drawing.Size(441, 111);
-            // 
-            // textBox1
-            // 
+
             textBox.Font = new System.Drawing.Font("Segoe UI Semilight", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             textBox.Location = new System.Drawing.Point(3, 6);
             textBox.Multiline = true;
@@ -89,9 +83,7 @@ namespace Clipped
             textBox.Text = text;
             textBox.BackColor = Color.LightYellow;
             panel.Controls.Add(textBox);
-            // 
-            // button1
-            // 
+ 
             button.Location = new System.Drawing.Point(364, 88);
             button.Name = "button1";
             button.Size = new System.Drawing.Size(75, 23);
@@ -108,14 +100,6 @@ namespace Clipped
             delete.UseVisualStyleBackColor = true;
             panel.Controls.Add(delete);
 
-            //save.Location = new System.Drawing.Point(200, 88);
-            //save.Name = "button3";
-            //save.Size = new System.Drawing.Size(75, 23);
-            //save.Text = "Save";
-            //save.Click += new EventHandler(save_Click);
-            //save.UseVisualStyleBackColor = true;
-            //panel.Controls.Add(save);
-
             this.Controls.Add(panel);
         }
 
@@ -127,6 +111,7 @@ namespace Clipped
             {
                 CreateDynamicForm(History.ElementAt(i - 1), i, History.Count);
             }
+
         }
 
         public void CreateDynamicQuickCopy()
@@ -202,7 +187,9 @@ namespace Clipped
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var confirmResult = MessageBox.Show("This app is brought to you by unMashed Tech.",
+            var confirmResult = MessageBox.Show("Clipped History when running enables you to retain your clipboard history so that you do not lose any old copied text in case you copy a new text. \n\n " +
+                "We neither send nor store any data over network. All your data is stored in a temporary session on your machine. \n\n" +
+                "This app is brought to you by unMashed Tech.",
                 "About Us", MessageBoxButtons.OK);
         }
 
@@ -213,21 +200,20 @@ namespace Clipped
 
         private void optionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var button = (ToolStripMenuItem)sender;
-            Clipboard.SetText(button.AccessibleDescription);
+            var option = (ToolStripMenuItem)sender;
+            Clipboard.SetText(option.AccessibleDescription);
         }
 
-        //private Color RandomizeColor()
-        //{
-        //    var random = new Random(10).Next();
-        //    switch(random % 3)
-        //    {
-        //        case 0: return Color.LightYellow;
-        //        case 1: return Color.LightSteelBlue;
-        //        case 2: return Color.LightGoldenrodYellow;
-        //    }
-
-        //    return Color.White;
-        //}
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            var option = (ToolStripMenuItem)sender;
+            toolStripMenuItem2.Checked = false;
+            toolStripMenuItem3.Checked = false;
+            toolStripMenuItem4.Checked = false;
+            toolStripMenuItem5.Checked = false;
+            toolStripMenuItem6.Checked = false;
+            option.Checked = true;
+            HistorySize = Convert.ToInt16(option.Text);
+        }
     }
 }
