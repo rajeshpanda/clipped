@@ -18,10 +18,10 @@ namespace Clipped
         {
             History = new Queue<string>();
             InitializeComponent();
-            InitializeBackgroudWorker();
-            backgroundWorker1.RunWorkerAsync();
             this.FormClosing += OnFormClosing;
             HistorySize = 20;
+            InitializeBackgroudWorker();
+            backgroundWorker1.RunWorkerAsync();
         }
 
         void InitializeBackgroudWorker()
@@ -34,7 +34,7 @@ namespace Clipped
         {
             while (true)
             {
-                this.Invoke((MethodInvoker)delegate
+                this.BeginInvoke((MethodInvoker)delegate
                 {
                     var newValue = Clipboard.GetText();
                     if (!History.Contains(newValue) && !string.IsNullOrEmpty(newValue))
