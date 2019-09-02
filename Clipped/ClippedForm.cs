@@ -20,6 +20,7 @@ namespace Clipped
             InitializeComponent();
             this.FormClosing += OnFormClosing;
             HistorySize = 20;
+            OnFormClosing(null, new FormClosingEventArgs(CloseReason.UserClosing, false));
             InitializeBackgroudWorker();
             backgroundWorker1.RunWorkerAsync();
         }
@@ -167,7 +168,7 @@ namespace Clipped
                 notifyIcon1.Visible = true;
                 CreateDynamicQuickCopy();
                 this.Hide();
-                notifyIcon1.ShowBalloonTip(1000);
+                //notifyIcon1.ShowBalloonTip(1000);
             }  
         }
 

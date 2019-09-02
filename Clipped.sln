@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clipped", "Clipped\Clipped.csproj", "{72B49659-F9D0-48E2-9058-E1AA247A22E6}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ClippedSetup", "ClippedSetup\ClippedSetup.vdproj", "{47849BD0-6E8F-4316-9596-AE4759966AD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{72B49659-F9D0-48E2-9058-E1AA247A22E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72B49659-F9D0-48E2-9058-E1AA247A22E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72B49659-F9D0-48E2-9058-E1AA247A22E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47849BD0-6E8F-4316-9596-AE4759966AD7}.Debug|Any CPU.ActiveCfg = Debug
+		{47849BD0-6E8F-4316-9596-AE4759966AD7}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
